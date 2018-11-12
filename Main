@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Vehicle
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			// ********** General and Misc. **********
+
+			// Printing: Console.Write instead of 
+			// System.out.print; WriteLine instead of println
+			Console.WriteLine();
+			Console.Write("");
+
+			// User Input: ReadLine instead of using a Scanner object
+			Console.ReadLine();
+
+			// Lists instead of Arraylists
+			List<string> names = new List<string>();
+			names.Add("Rhys");
+			names.Add("RIT");
+			names.Add("CSH");
+
+			// Printing each element with a foreach loop
+			foreach(string name in names)
+			{
+				Console.WriteLine(name);
+			}
+
+			// Removes an element and reprints each element
+			names.Remove("RIT");
+			foreach (string name in names)
+			{
+				Console.WriteLine(name);
+			}
+
+			// Constants: const not final
+			const int x = 10;
+			const string word = "Hello";
+
+
+
+			// ********** Working with the Concole **********
+
+			Console.Clear();
+
+			// Changing the Console color
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.BackgroundColor = ConsoleColor.Green;
+			// Changing the Console color back to normal
+			Console.ForegroundColor = ConsoleColor.Gray;
+			Console.BackgroundColor = ConsoleColor.Black;
+
+			// Setting the cursor position
+			Console.CursorLeft = 4;
+			Console.CursorTop = 6;
+
+			// Setting the Window Size
+			Console.WindowHeight = 50;
+			Console.WindowWidth = 200;
+
+
+
+			// ********** Working With the Classes and Inheritance **********
+
+			// Create one of each object
+			Vehicle v1 = new Vehicle("Drivey", 6, 200, 25, 30);
+			Tank tank = new Tank("Tankster", 8, 0, 40, 20, 4);
+			Car car = new Car("Carman McGee", 4, 1000, 14, 40, 4, 2);
+
+
+			Console.ReadLine();
+		}
+	}
+}
