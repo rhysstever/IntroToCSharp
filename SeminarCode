@@ -1,0 +1,242 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Vehicle
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			// ********** General and Misc. **********
+
+			// Printing: Console.Write instead of 
+			// System.out.print; WriteLine instead of println
+			Console.WriteLine();
+			Console.Write("");
+
+			// User Input: ReadLine instead of using a Scanner object
+			Console.ReadLine();
+
+			// Lists instead of Arraylists
+			List<string> names = new List<string>();
+			names.Add("Rhys");
+			names.Add("RIT");
+			names.Add("CSH");
+
+			// Printing each element with a foreach loop
+			foreach(string name in names)
+			{
+				Console.WriteLine(name);
+			}
+
+			// Removes an element and reprints each element
+			names.Remove("RIT");
+			foreach (string name in names)
+			{
+				Console.WriteLine(name);
+			}
+
+			// Constants: const not final
+			const int x = 10;
+			const string word = "Hello";
+
+
+
+			// ********** Working with the Concole **********
+
+			Console.Clear();
+
+			// Changing the Console color
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.BackgroundColor = ConsoleColor.Green;
+			// Changing the Console color back to normal
+			Console.ForegroundColor = ConsoleColor.Gray;
+			Console.BackgroundColor = ConsoleColor.Black;
+
+			// Setting the cursor position
+			Console.CursorLeft = 4;
+			Console.CursorTop = 6;
+
+			// Setting the Window Size
+			Console.WindowHeight = 50;
+			Console.WindowWidth = 200;
+
+
+
+			// ********** Working With the Classes and Inheritance **********
+
+			// Create one of each object
+			Vehicle v1 = new Vehicle("Drivey", 6, 200, 25, 30);
+			Tank tank = new Tank("Tankster", 8, 0, 40, 20, 4);
+			Car car = new Car("Carman McGee", 4, 1000, 14, 40, 4, 2);
+
+
+			Console.ReadLine();
+		}
+	}
+	
+	class Vehicle
+	{
+		// Fields
+		private string name;
+		private int wheels;
+		private int mileage;
+		private int gas;
+		private int capacity;
+		private int mpg;
+
+		/// <summary>
+		/// Properties to access any parameter
+		/// </summary>
+		public string Name { get { return name; } }
+		public int Wheels { get { return wheels; } }
+		public int Mileage { get { return mileage; } }
+		public int Gas { get { return gas; } }
+		public int Capacity { get { return capacity; } }
+		public int MPG { get { return mpg; } }
+
+		/// <summary>
+		/// Assigns values to each field of a Vehicle object
+		/// </summary>
+		/// <param name="name">The name of the vehicle</param>
+		/// <param name="wheels">The number of wheels of the vehicle</param>
+		/// <param name="mileage">The number of miles already on the vehicle</param>
+		/// <param name="capacity">The gas tank capacity, in gallons. The current 
+		/// number of gallons in the vehicle is set (initially) to the capacity 
+		/// (the vehicle is starting with a full tank)</param>
+		/// <param name="mpg">The miles per gallon the vehicle gets</param>
+		public Vehicle(string name, int wheels, int mileage, int capacity, int mpg)
+		{
+			this.name = name;
+			this.wheels = wheels;
+			this.mileage = mileage;
+			this.gas = capacity;
+			this.capacity = capacity;
+			this.mpg = mpg;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="miles">The number of miles the vehicle will drive</param>
+		public void Drive(int miles)
+		{
+			// Calculate the amount of gas needed for the trip
+			int gasNeeded = miles / mpg;
+
+			/* If the vehicle needs more gas than it has, it will drive as many 
+			 *	miles as it can before it runs out of gas
+			 * If the vehicle HAS enough gas, it will drive the given number of miles 
+			 * In either case, the user will be updated how many miles were driven, 
+			 * the total mileage of the vehicle, and the amount of gas left in the tank.
+			*/ 
+			if (gasNeeded > gas)
+			{
+				miles = gas * mpg;
+				mileage = mileage + miles;
+				gas = 0;
+				Console.WriteLine(name + " drives " + miles + " before it ran out of gas.");
+				Console.WriteLine("It has driven for a total of " + mileage + " miles and has " + gas + " gallons of gas left.");
+			}
+			else
+			{
+				mileage = mileage + miles;
+				gas = gas - gasNeeded;
+				Console.WriteLine(name + " drives " + miles + ".");
+				Console.WriteLine("It has driven for a total of " + mileage + " miles and has " + gas + " gallons of gas left.");
+			}
+		}
+
+		/// <summary>
+		/// Refills the gas tank of the vehicle back to its starting capacity
+		/// </summary>
+		public void RefillTank()
+		{
+			gas = capacity;
+		}
+	}
+	
+	class Car : Vehicle
+	{
+		// Fields
+		private int seats;
+		private int passengers;
+
+		/// <summary>
+		/// Assigns values to a Car object
+		/// </summary>
+		/// <param name="name">The name of the car</param>
+		/// <param name="wheels">The number of wheels of the car</param>
+		/// <param name="mileage">The total miles of the car</param>
+		/// <param name="capacity">The gas tank capacity</param>
+		/// <param name="mpg">The miles per gallon </param>
+		/// <param name="seats">The number of seats in the car, the total 
+		/// number of people that can sit in the car</param>
+		/// <param name="passengers">The current number of people in the car</param>
+		public Car(string name, int wheels, int mileage, int capacity, int mpg, int seats, int passengers) 
+			: base(name, wheels, mileage, capacity, mpg)
+		{	
+			this.seats = seats;
+			this.passengers = passengers;
+		}
+
+		/// <summary>
+		/// Alters the number of people in the car, it will not allow anyone 
+		/// in the car if there are not enough seats for everyone
+		/// </summary>
+		/// <param name="people">The number of people wishing to enter the car</param>
+		public void AddPassengers(int people)
+		{
+			if(passengers + people > seats)
+			{
+				Console.WriteLine("Not Enough Seats!");
+			}
+			else
+			{
+				passengers += people;
+				Console.WriteLine(people + " entered the car. There are " + (seats - passengers) + " left");
+			}
+		}
+	}
+	
+	class Tank : Vehicle
+	{
+		private int shots;
+
+		/// <summary>
+		/// Assigns values to the Tank object
+		/// </summary>
+		/// <param name="name">The name of tank</param>
+		/// <param name="wheels">The number of wheels of the tank</param>
+		/// <param name="mileage">The total mileage of the tank</param>
+		/// <param name="capacity">The total gas tank capacity of the tank</param>
+		/// <param name="mpg">The miles per gallon the tank gets</param>
+		/// <param name="shots">The number of shots the tnak has to take</param>
+		public Tank(string name, int wheels, int mileage, int capacity, int mpg, int shots) 
+			: base(name, wheels, mileage, capacity, mpg)
+		{
+			this.shots = shots;
+		}
+
+		/// <summary>
+		/// Allows the tank to take a shot if it has enough
+		/// Prints if it shot or not, and if it did, how many
+		/// shots it has left
+		/// </summary>
+		public void Shoot()
+		{
+			if(shots > 0)
+			{
+				Console.WriteLine("The Tank, " + Name + ", shoots.");
+				Console.WriteLine("It has " + shots + " shots left.");
+			}
+			else
+			{
+				Console.WriteLine("The Tank, " + Name + ", does not have any more shots left");
+			}
+		}
+	}
+}
